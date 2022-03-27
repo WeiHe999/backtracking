@@ -1,3 +1,8 @@
+/*
+backtracking (DFS) to find a valid path from start to end.
+(There are maybe multiple paths to reach the end node, here dfs only finds a single path)
+If you want to find the number of paths to reach the end node, use bottom-up dynamic programming.
+*/
 #include <bits/stdc++.h>
 using namespace std;
 
