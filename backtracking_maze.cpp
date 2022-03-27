@@ -12,47 +12,32 @@ template < typename T > void print (T t)
     cout << endl;
 }
 
-void dfs(int start_node, int end_node, unordered_map<int, unordered_set<int> > graph, unordered_set<int> & visited, vector<int> & path, vector<int> & result)
+void dfs(int start_node, int end_node, int cur_node, unordered_map <int, unordered_set <int> > graph, vector <int> &vec1, unordered_set <int> &visited)
 {
-    if (!visited.count(start_node))
+    if (cur_node == end_node)
     {
-        visited.insert(start_node);
-        path.push_back(start_node);
-        if (graph[start_node].size()==0) 
+        for (auto x : vec1) cout << x << " ";
+        cout << endl;
+        return;
+    }
+    for (auto a : graph[cur_node])
+    {
+        if (!visited.count(a))
         {
-            cout << "dead end" << endl;
-            print(path);
-            cout << "*****" << endl;
-            return;
-        }
-        for (auto x: graph[start_node])
-        {
-            
-            cout << "from " << start_node << " to " << x << endl; 
-            if(x==end_node)
-            {
-                cout << "found the path" << endl;
-                path.push_back(x);
-                print(path);
-                result = path;
-                return;
-            }
-            else 
-            {
-                vector<int> new_path = path;
-                dfs(x, end_node, graph, visited, new_path, result);
-            }
+            visited.insert(a);
+            vector <int> vec2 = vec1;
+            vec2.emplace_back(a);
+            dfs(start_node, end_node, a, graph, vec2, visited);
         }
     }
 }
 
 int main()
 {
-    unordered_map<int, unordered_set<int> > graph = {{0, {1, 3}}, {1, {2}}, {2, {}}, {3, {4, 6}}, {4, {5, 7}}, {5, {}},
-    {6, {7}}, {7, {8}}, {8, {}} };
-    unordered_set<int> visited;
-    vector<int> path, result;
-    dfs(0, 8, graph, visited, path, result);
-    print(result);
- 
+    cin.tie(0); cout.tie(0); cin.sync_with_stdio(0);
+    unordered_map <int, unordered_set <int> > graph = {{0, {1, 3}}, {1, {2}}, {2, {}}, {3, {4, 6}}, {4, {5, 7}}, {5, {}}, {6, {7}}, {7, {8}}, {8, {}}};
+    int start_node = 0, end_node = 8;
+    vector <int> vec1 = {start_node};
+    unordered_set <int> visited = {start_node};
+    dfs(start_node, end_node, start_node, graph, vec1, visited);
 }
