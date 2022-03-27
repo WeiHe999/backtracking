@@ -13,9 +13,16 @@ void dfs(int start_node, int end_node, unordered_map<int, unordered_set<int> > g
     {
         visited.insert(start_node);
         path.push_back(start_node);
-        if (graph[start_node].size()==0) return;
+        if (graph[start_node].size()==0) 
+        {
+            cout << "dead end" << endl;
+            print(path);
+            cout << "*****" << endl;
+            return;
+        }
         for (auto x: graph[start_node])
         {
+            
             cout << "from " << start_node << " to " << x << endl; 
             if(x==end_node)
             {
@@ -24,7 +31,12 @@ void dfs(int start_node, int end_node, unordered_map<int, unordered_set<int> > g
                 print(path);
                 return;
             }
-            dfs(x, end_node, graph, visited, path);
+            else 
+            {
+                vector<int> new_path = path;
+                dfs(x, end_node, graph, visited, new_path);
+            }
+            
         }
         
     }
